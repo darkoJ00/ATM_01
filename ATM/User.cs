@@ -7,7 +7,7 @@ namespace ATM
     {
         private string name;
         private string password;
-        private string logData = @"C:\Moji Dokumenti\Za skolu\DataPrograming\logData.txt";
+        private string logData = @"logDataFilePath";
 
 
 
