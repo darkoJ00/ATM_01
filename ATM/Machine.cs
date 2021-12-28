@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.IO;
 
 namespace ATM
 {
     public class Machine
     {
-        private string status = @"statusFilePath";
+        private string status = @"C:\Moji Dokumenti\Za skolu\DataPrograming\Status.txt";
 
 
         public void transactionExecution(User user, Machine machine) 
@@ -31,8 +31,7 @@ namespace ATM
                         Console.WriteLine("Your new balance : {0}",statusRead());
 
                     }
-                    else Console.WriteLine("Unknown command! Choose 1 for pay in, choose 2 for pay out option. ");
-                
+         
             }
             else
             {
@@ -44,8 +43,22 @@ namespace ATM
         private void payIn()
         {
             decimal statusOld = statusRead();
-            decimal statusNew = statusOld + userInput();
-            statusUpdate(statusNew);
+            decimal userInputValue = userInput();
+            while (true) 
+            {
+                if(userInputValue <= 0) 
+                {
+                    Console.WriteLine("Unable to complete action! Please enter valid amount! ");
+                    userInputValue = userInput();
+                }
+                else
+                {
+                    decimal statusNew = statusOld + userInputValue;
+                    statusUpdate(statusNew);
+                    break;
+                }
+            }
+            
         }
 
         private void payOut()
@@ -56,7 +69,7 @@ namespace ATM
             {
                 if (statusOld < userInputValue)
                 {
-                    Console.WriteLine("Unable to complete action! Insuficient funds!");
+                    Console.WriteLine("Unable to complete action! Please enter valid amount! ");
                     userInputValue = userInput();
                 }
                 else
@@ -78,7 +91,13 @@ namespace ATM
         }
         private decimal userInput() 
         {
-            decimal amount = decimal.Parse(Console.ReadLine());
+            decimal amount;
+            bool correctAmount = decimal.TryParse(Console.ReadLine(), out amount);
+            while (!correctAmount || amount <= 0) 
+            {
+                Console.WriteLine("Invalid Input. Please enter a valid amount! ");
+                correctAmount = decimal.TryParse(Console.ReadLine(),out amount);
+            }
             return amount;
         }
         private void statusUpdate(decimal statusNew) 
