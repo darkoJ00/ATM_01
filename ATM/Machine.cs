@@ -5,7 +5,7 @@ namespace ATM
 {
     public class Machine
     {
-        private string status = @"C:\Moji Dokumenti\Za skolu\DataPrograming\Status.txt";
+        private string status = @"statusFilePath\Status.txt";
 
 
         public void transactionExecution(User user, Machine machine) 
